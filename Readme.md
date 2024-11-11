@@ -33,7 +33,7 @@ This is the frontend of the StockExchange project, an online platform where user
 
 1. Clone the repository to your directory using the command:
    ```bash
-   git clone https://github.com/IsaAlEid/StockExchange
+   git clone https://github.com/Aliiyousiff/tradex-FE
 
 * Install dependencies:
   ```bash
