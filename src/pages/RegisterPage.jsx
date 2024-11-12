@@ -18,8 +18,8 @@ const RegisterPage = () => {
     e.preventDefault();
     try {
       await RegisterUser(formValues);
-      setFormValues(initialState);
-      navigate("/");
+      setFormValues(initialState); // Reset form
+      navigate("/login"); // Redirect to login page after successful registration
     } catch (error) {
       setError("Registration failed! Please try again.");
     }
@@ -28,39 +28,37 @@ const RegisterPage = () => {
   return (
     <div className="form-container">
       <h1>Join TradeX!</h1>
-      <form onSubmit={handleSubmit}>
-        <Box component="form" noValidate autoComplete="off">
-          <TextField
-            label="Username"
-            name="username"
-            type="text"
-            onChange={handleChange}
-            value={formValues.username}
-            required
-            fullWidth
-          />
-          <TextField
-            label="Email"
-            name="email"
-            type="email"
-            onChange={handleChange}
-            value={formValues.email}
-            required
-            fullWidth
-          />
-          <TextField
-            label="Password"
-            name="password"
-            type="password"
-            onChange={handleChange}
-            value={formValues.password}
-            required
-            fullWidth
-          />
-        </Box>
+      <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit}>
+        <TextField
+          label="Username"
+          name="username"
+          type="text"
+          onChange={handleChange}
+          value={formValues.username}
+          required
+          fullWidth
+        />
+        <TextField
+          label="Email"
+          name="email"
+          type="email"
+          onChange={handleChange}
+          value={formValues.email}
+          required
+          fullWidth
+        />
+        <TextField
+          label="Password"
+          name="password"
+          type="password"
+          onChange={handleChange}
+          value={formValues.password}
+          required
+          fullWidth
+        />
         {error && <p className="error-message">{error}</p>}
         <button type="submit" className="button">Register</button>
-      </form>
+      </Box>
     </div>
   );
 };
