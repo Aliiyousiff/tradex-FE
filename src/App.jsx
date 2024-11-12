@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Routes, Route } from 'react-router-dom' // Removed BrowserRouter from here
+import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Dashboard from './pages/Dashboard'
 import Market from './pages/Market'
 import Profile from './pages/Profile'
 import Login from './pages/LoginPage'
 import Register from './pages/RegisterPage'
+import StockDetail from './pages/StockDetail' // Import the StockDetail page
 import axios from 'axios'
-import './App.css';
+import './App.css'
 
 const App = () => {
   // State to manage user authentication
@@ -120,7 +121,10 @@ const App = () => {
           }
         />
 
-        {/* Default route */}
+        {/* Stock details route */}
+        <Route path="/stockdetail" element={<StockDetail />} />
+
+        {/* Default route (shows Market by default) */}
         <Route
           path="/"
           element={

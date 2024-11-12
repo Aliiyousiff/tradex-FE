@@ -1,21 +1,32 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FaSignOutAlt, FaUser, FaChartLine, FaStore, FaSun, FaMoon } from 'react-icons/fa';
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import {
+  FaSignOutAlt,
+  FaUser,
+  FaChartLine,
+  FaStore,
+  FaSun,
+  FaMoon
+} from 'react-icons/fa'
 
 const Navbar = ({ isAuthenticated, onLogout }) => {
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(true)
 
   // Toggle dark mode
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.body.classList.toggle('light-mode', !darkMode);
-  };
+    setDarkMode(!darkMode)
+    document.body.classList.toggle('light-mode', !darkMode)
+  }
 
   return (
     <nav className="navbar">
       <div className="navbar-logo">
         <Link to="/">
-          <img src="/images/logo.png" alt="TradeX Logo" className="navbar-logo-img" />
+          <img
+            src="/images/logo.png"
+            alt="TradeX Logo"
+            className="navbar-logo-img"
+          />
         </Link>
       </div>
 
@@ -63,7 +74,7 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
         {darkMode ? <FaSun /> : <FaMoon />}
       </button>
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
