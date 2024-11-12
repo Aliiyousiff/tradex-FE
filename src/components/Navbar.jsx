@@ -8,12 +8,12 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
     document.body.classList.toggle("light-mode", !darkMode);
-    localStorage.setItem("darkMode", !darkMode); // Save the preference in localStorage
+    localStorage.setItem("darkMode", !darkMode);
   };
 
   return (
     <nav className="navbar">
-      <div className="navbar-left">
+      <div className="navbar-container">
         <Link to="/" className="navbar-logo">
           <img src="/images/logo.png" alt="TradeX Logo" className="navbar-logo-img" />
         </Link>
@@ -26,6 +26,16 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
           <li>
             <Link to="/aboutus" className="navbar-link">
               <FaInfoCircle /> About Us
+            </Link>
+          </li>
+          <li>
+            <Link to="/contact" className="navbar-link">
+              Contact
+            </Link>
+          </li>
+          <li>
+            <Link to="/privacy" className="navbar-link">
+              Privacy Policy
             </Link>
           </li>
           {isAuthenticated ? (

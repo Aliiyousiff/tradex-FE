@@ -8,7 +8,9 @@ import Login from "./pages/LoginPage";
 import Register from "./pages/RegisterPage";
 import StockDetail from "./pages/StockDetail";
 import AboutUsPage from "./pages/AboutUsPage";
-import HomePage from "./pages/HomePage"; // Add the home page
+import HomePage from "./pages/HomePage";
+import ContactPage from "./pages/ContactPage";  // Import ContactPage
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";  // Import PrivacyPolicyPage
 import axios from "axios";
 import "./App.css";
 
@@ -85,7 +87,7 @@ const App = () => {
     <div className="App">
       <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
       <Routes>
-        <Route path="/" element={<HomePage />} /> {/* Home page route */}
+        <Route path="/" element={<HomePage />} />
         <Route
           path="/login"
           element={<Login setIsAuthenticated={setIsAuthenticated} setUser={setUser} />}
@@ -115,7 +117,8 @@ const App = () => {
         />
         <Route path="/stockdetail" element={<StockDetail />} />
         <Route path="/aboutus" element={<AboutUsPage />} />
-        {/* Catch-all route for undefined paths */}
+        <Route path="/contact" element={<ContactPage />} />  {/* Contact Page Route */}
+        <Route path="/privacy" element={<PrivacyPolicyPage />} />  {/* Privacy Policy Route */}
         <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>
     </div>

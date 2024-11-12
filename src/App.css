@@ -33,21 +33,22 @@ body.light-mode {
 
 .navbar {
   background: linear-gradient(145deg, #2b2b30, #3c3c43);
-  padding: 10px 20px;
+  padding: 15px 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--border-color);
 }
 
-.navbar-left {
+.navbar-container {
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .navbar-logo-img {
-  width: 80px;
+  width: 100px;
   height: auto;
   transition: transform 0.2s ease;
 }
@@ -58,20 +59,39 @@ body.light-mode {
 
 .navbar-links {
   display: flex;
-  gap: 20px;
+  gap: 30px;
   list-style: none;
+  align-items: center;
+  margin-left: auto;
 }
 
-.navbar-link,
-.logout-button {
+.navbar-link {
   color: var(--text-color);
   text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  transition: background-color 0.2s ease;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease;
 }
 
-.navbar-link:hover,
+.navbar-link:hover {
+  color: var(--button-bg-primary);
+}
+
+.navbar-link svg {
+  margin-right: 8px;
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
 .logout-button:hover {
   background-color: #4a4a50;
 }
