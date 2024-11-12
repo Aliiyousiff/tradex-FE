@@ -18,11 +18,13 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
           <img src="/images/logo.png" alt="TradeX Logo" className="navbar-logo-img" />
         </Link>
         <ul className="navbar-links">
-          <li>
-            <Link to="/market" className="navbar-link">
-              <FaStore /> Market
-            </Link>
-          </li>
+          {isAuthenticated && (
+            <li>
+              <Link to="/market" className="navbar-link">
+                <FaStore /> Market
+              </Link>
+            </li>
+          )}
           <li>
             <Link to="/aboutus" className="navbar-link">
               <FaInfoCircle /> About Us
