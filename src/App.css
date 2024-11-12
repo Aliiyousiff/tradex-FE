@@ -1,4 +1,4 @@
-/* Global Styles */
+/* Base Styles */
 body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
@@ -8,90 +8,48 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Theme Variables */
 :root {
-  --bg-color: #141414;
-  --text-color: #e0e0e0;
-  --card-bg-color: #1f1f1f;
-  --border-color: #2e2e30;
-  --button-bg-primary: #28a745;
-  --button-bg-secondary: #dc3545;
-  --button-bg-tertiary: #007bff;
+  --bg-color: #1a1a1d;
+  --text-color: #dcdcdc;
+  --card-bg-color: #2e2e34;
+  --border-color: #3f3f46;
+  --button-bg-primary: #34c759; /* Green */
+  --button-bg-secondary: #ff3b30; /* Red */
+  --button-bg-tertiary: #ffcc00; /* Yellow */
+  --button-bg-details: #4a90e2; /* Blue */
   --button-text-color: #ffffff;
 }
 
 body.light-mode {
-  --bg-color: #f0f0f0;
-  --text-color: #141414;
-  --card-bg-color: #ffffff;
-  --border-color: #d0d0d0;
-  --button-bg-primary: #34c759;
-  --button-bg-secondary: #ff3b30;
-  --button-bg-tertiary: #0a84ff;
-  --button-text-color: #ffffff;
+  --bg-color: #e5e5e5;
+  --text-color: #1a1a1d;
+  --card-bg-color: #f0f0f0;
+  --border-color: #b0b0b0;
+  --button-bg-primary: #5dade2;
+  --button-bg-secondary: #e57373;
+  --button-bg-tertiary: #ffd700;
+  --button-bg-details: #5a9bd8;
+  --button-text-color: #1a1a1d;
 }
 
-/* About Us Page Styles */
-.aboutus-container {
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 20px;
-  background: var(--card-bg-color);
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
-  color: var(--text-color);
-}
-
-.aboutus-sections {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.aboutus-sections .card {
-  padding: 20px;
-  border-radius: 12px;
-  background-color: var(--card-bg-color);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-  border: 1px solid var(--border-color);
-}
-
-.aboutus-sections h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.aboutus-sections p {
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-/* App Container */
-.App {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: var(--bg-color);
-}
-
-/* Navigation Bar */
+/* Navbar Styles */
 .navbar {
-  background: linear-gradient(145deg, #1c1c1e, #262628);
-  padding: 10px 40px;
+  background: linear-gradient(145deg, #2b2b30, #3c3c43);
+  padding: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--border-color);
 }
 
-/* Logo Image */
-.navbar-logo {
+.navbar-left {
   display: flex;
   align-items: center;
+  gap: 20px;
 }
 
 .navbar-logo-img {
-  width: 140px;
+  width: 80px;
   height: auto;
   transition: transform 0.2s ease;
 }
@@ -100,29 +58,24 @@ body.light-mode {
   transform: scale(1.05);
 }
 
-/* Navbar Links */
 .navbar-links {
   display: flex;
-  align-items: center;
-  gap: 30px;
-  flex: 1;
-  justify-content: center;
+  gap: 20px;
+  list-style: none;
 }
 
 .navbar-link,
 .logout-button {
   color: var(--text-color);
   text-decoration: none;
-  font-size: 16px;
-  font-weight: 500;
-  padding: 8px 16px;
+  padding: 8px 12px;
   border-radius: 5px;
-  transition: color 0.2s ease, background-color 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 .navbar-link:hover,
 .logout-button:hover {
-  background-color: #333333;
+  background-color: #4a4a50;
 }
 
 /* Dark Mode Toggle Button */
@@ -130,145 +83,151 @@ body.light-mode {
   background: none;
   border: none;
   color: var(--text-color);
-  font-size: 20px;
+  font-size: 22px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
+  padding: 10px;
   border-radius: 50%;
   transition: background-color 0.3s ease;
 }
 
 .toggle-button:hover {
-  background-color: #333333;
+  background-color: #4a4a50;
+}
+
+/* Form Container Styles */
+.form-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  background: var(--card-bg-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+input,
+button,
+.TextField {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--card-bg-color);
+  color: var(--text-color);
+}
+
+button {
+  cursor: pointer;
+  background-color: var(--button-bg-details);
+  color: var(--button-text-color);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Error Message */
+.error-message {
+  color: var(--button-bg-secondary);
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+/* About Us Page */
+.aboutus-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background: var(--card-bg-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+.aboutus-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 28px;
+}
+
+.aboutus-sections .card {
+  padding: 20px;
+  border-radius: 12px;
+  background: var(--card-bg-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px;
+}
+
+.card h2 {
+  margin-bottom: 10px;
+  font-size: 22px;
+}
+
+.card p {
+  font-size: 16px;
+}
+
+.icon {
+  margin-right: 10px;
+  color: var(--button-bg-primary);
 }
 
 /* Stock List Layout */
 .stock-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
   padding: 20px;
 }
 
-/* Stock Item Card */
-.stock-item {
+.stock-item-card {
   background: var(--card-bg-color);
-  color: var(--text-color);
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.stock-chart {
+  margin: 20px 0;
+}
+
+.button-container {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  gap: 10px;
 }
 
-.stock-item:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+.buy-button {
+  background: var(--button-bg-primary);
 }
 
-.stock-item h2 {
-  font-size: 20px;
-  margin-bottom: 10px;
+.sell-button {
+  background: var(--button-bg-secondary);
 }
 
-.stock-item p {
-  font-size: 16px;
-  margin-bottom: 15px;
+.favorite-button {
+  background: var(--button-bg-tertiary);
 }
 
-/* Button Styles */
-button,
-button.primary,
-button.secondary,
-button.tertiary {
-  display: inline-block;
-  padding: 12px 20px;
-  border-radius: 8px;
-  border: none;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--button-text-color);
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.details-button {
+  background: var(--button-bg-details);
 }
 
-button.primary:hover {
-  background: #34d058;
-  transform: translateY(-3px);
-}
-
-button.secondary:hover {
-  background: #e74c3c;
-  transform: translateY(-3px);
-}
-
-button.tertiary:hover {
-  background: #339af0;
-  transform: translateY(-3px);
-}
-
-button:disabled {
-  background: #3a3a3d;
-  color: #b0b0b0;
-  cursor: not-allowed;
-}
-
-/* Form Container */
-.form-container {
-  max-width: 450px;
-  margin: 20px auto;
-  padding: 20px;
-  background: var(--card-bg-color);
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
-}
-
-/* Error Message */
-.error-message {
-  color: #e74c3c;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-/* Footer */
-footer {
-  background: linear-gradient(145deg, #1c1c1e, #262628);
-  color: var(--text-color);
-  text-align: center;
-  padding: 20px;
-}
-
-/* Media Queries */
+/* Responsive Design */
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
-    align-items: flex-start;
   }
 
-  .navbar-logo-img {
-    width: 120px;
-  }
-
-  .navbar-links {
+  .button-container {
     flex-direction: column;
-    gap: 15px;
-    margin-top: 10px;
   }
 
-  .toggle-button {
-    align-self: flex-end;
+  .form-container {
+    width: 90%;
   }
 
-  .stock-list {
-    grid-template-columns: 1fr;
-  }
-
-  button {
+  .details-button {
     width: 100%;
   }
 }
