@@ -1,32 +1,22 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import {
-  FaSignOutAlt,
-  FaUser,
-  FaChartLine,
-  FaStore,
-  FaSun,
-  FaMoon
-} from 'react-icons/fa'
+// src/components/Navbar.jsx
+
+import React, { useState } from "react"
+import { Link } from "react-router-dom"
+import { FaSignOutAlt, FaUser, FaChartLine, FaStore, FaSun, FaMoon, FaInfoCircle } from "react-icons/fa"
 
 const Navbar = ({ isAuthenticated, onLogout }) => {
   const [darkMode, setDarkMode] = useState(true)
 
-  // Toggle dark mode
   const toggleDarkMode = () => {
     setDarkMode(!darkMode)
-    document.body.classList.toggle('light-mode', !darkMode)
+    document.body.classList.toggle("light-mode", !darkMode)
   }
 
   return (
     <nav className="navbar">
       <div className="navbar-logo">
         <Link to="/">
-          <img
-            src="/images/logo.png"
-            alt="TradeX Logo"
-            className="navbar-logo-img"
-          />
+          <img src="/images/logo.png" alt="TradeX Logo" className="navbar-logo-img" />
         </Link>
       </div>
 
@@ -34,6 +24,11 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
         <li>
           <Link to="/market" className="navbar-link">
             <FaStore /> Market
+          </Link>
+        </li>
+        <li>
+          <Link to="/aboutus" className="navbar-link">
+            <FaInfoCircle /> About Us
           </Link>
         </li>
         {isAuthenticated ? (
@@ -57,14 +52,10 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
         ) : (
           <>
             <li>
-              <Link to="/login" className="navbar-link">
-                Login
-              </Link>
+              <Link to="/login" className="navbar-link">Login</Link>
             </li>
             <li>
-              <Link to="/register" className="navbar-link">
-                Register
-              </Link>
+              <Link to="/register" className="navbar-link">Register</Link>
             </li>
           </>
         )}
