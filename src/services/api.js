@@ -1,5 +1,3 @@
-// services/api.js
-
 import Axios from 'axios';
 
 export const BASE_URL = 'http://localhost:4000'; // Backend server URL
