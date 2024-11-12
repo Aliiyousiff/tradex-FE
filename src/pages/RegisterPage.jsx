@@ -1,14 +1,16 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { RegisterUser } from "../services/Auth";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
+
+import React from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { RegisterUser } from '../services/Auth';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
 const RegisterPage = () => {
-  const navigate = useNavigate();
-  const initialState = { username: "", email: "", password: "" };
+  let navigate = useNavigate();
+  let initialState = { username: '', email: '', password: '' };
   const [formValues, setFormValues] = useState(initialState);
-  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
@@ -18,11 +20,12 @@ const RegisterPage = () => {
     e.preventDefault();
     try {
       await RegisterUser(formValues);
-      setFormValues(initialState); // Reset form
-      navigate("/login"); // Redirect to login page after successful registration
+
+      setFormValues(initialState);
+      navigate('/login');
     } catch (error) {
-      setError("Registration failed! Please try again.");
-    }
+      setErrorMessage(error.response?.data.message || 'Registration failed');
+
   };
 
   return (

@@ -12,7 +12,6 @@ export const RegisterUser = async (userData) => {
     throw error;
   }
 };
-
 // Login a user
 export const SignInUser = async (data) => {
   try {
@@ -21,14 +20,7 @@ export const SignInUser = async (data) => {
     localStorage.setItem('token', response.data.token);
     return response.data;
   } catch (error) {
-    if (error.response) {
-      console.error('Error signing in:', error.response.data);
-      console.error('Status code:', error.response.status);
-    } else if (error.request) {
-      console.error('No response received:', error.request);
-    } else {
-      console.error('Error setting up request:', error.message);
-    }
+    console.error('Error signing in:', error.response?.data || error.message);
     throw error;
   }
 };
