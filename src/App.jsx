@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
 import Market from "./pages/Market";
@@ -9,8 +9,8 @@ import Register from "./pages/RegisterPage";
 import StockDetail from "./pages/StockDetail";
 import AboutUsPage from "./pages/AboutUsPage";
 import HomePage from "./pages/HomePage";
-import ContactPage from "./pages/ContactPage";  // Import ContactPage
-import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";  // Import PrivacyPolicyPage
+import ContactPage from "./pages/ContactPage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import axios from "axios";
 import "./App.css";
 
@@ -19,7 +19,6 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    console.log("Checking authentication status...");
     const token = localStorage.getItem("authToken");
     if (token) {
       axios
@@ -29,19 +28,16 @@ const App = () => {
           },
         })
         .then((response) => {
-          console.log("User authenticated:", response.data);
           setUser(response.data);
           setIsAuthenticated(true);
         })
-        .catch((error) => {
-          console.error("Authentication error:", error);
+        .catch(() => {
           setIsAuthenticated(false);
         });
     }
   }, []);
 
   const handleLogout = () => {
-    console.log("Logging out...");
     localStorage.removeItem("authToken");
     setUser(null);
     setIsAuthenticated(false);
@@ -95,30 +91,32 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route
           path="/market"
-          element={
+          element={isAuthenticated ? (
             <Market
               onBuy={handleBuyStock}
               onSell={handleSellStock}
               onFavorite={handleAddToFavorites}
             />
-          }
+          ) : (
+            <Navigate to="/login" />
+          )}
         />
         <Route
           path="/dashboard"
           element={
-            isAuthenticated ? <Dashboard user={user} /> : <Login setIsAuthenticated={setIsAuthenticated} setUser={setUser} />
+            isAuthenticated ? <Dashboard user={user} /> : <Navigate to="/login" />
           }
         />
         <Route
           path="/profile"
           element={
-            isAuthenticated ? <Profile /> : <Login setIsAuthenticated={setIsAuthenticated} setUser={setUser} />
+            isAuthenticated ? <Profile /> : <Navigate to="/login" />
           }
         />
         <Route path="/stockdetail" element={<StockDetail />} />
         <Route path="/aboutus" element={<AboutUsPage />} />
-        <Route path="/contact" element={<ContactPage />} />  {/* Contact Page Route */}
-        <Route path="/privacy" element={<PrivacyPolicyPage />} />  {/* Privacy Policy Route */}
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/privacy" element={<PrivacyPolicyPage />} />
         <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>
     </div>
