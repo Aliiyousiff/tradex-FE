@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom'; // Hooks for accessing location and navigating
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -12,28 +12,20 @@ import {
   Legend
 } from 'chart.js';
 
-// Registering the necessary Chart.js components
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+// Registering necessary Chart.js components
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const StockDetail = () => {
-  const location = useLocation(); // Access the location prop
-  const navigate = useNavigate(); // Hook for navigation
+  const location = useLocation();
+  const navigate = useNavigate();
   const [stock, setStock] = useState(null);
 
-  // Extract stock data from location state (passed from Market page)
+  // Extract stock data from location state
   useEffect(() => {
     if (location.state && location.state.stock) {
       setStock(location.state.stock);
     } else {
-      navigate('/market'); // If no stock data, redirect to Market page
+      navigate('/market');
     }
   }, [location, navigate]);
 
@@ -49,19 +41,71 @@ const StockDetail = () => {
         label: `${stock.name} Price History`,
         data: stock.priceHistory.map((entry) => entry.price),
         fill: false,
-        borderColor: '#27AE60',
-        tension: 0.1
+        borderColor: '#4a90e2',
+        backgroundColor: '#4a90e2',
+        pointRadius: 3,
+        pointBackgroundColor: '#34c759',
+        pointBorderColor: '#ffffff',
+        tension: 0.3,
       }
     ]
   };
 
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+        labels: {
+          color: '#dcdcdc',
+          font: {
+            family: 'Roboto',
+            size: 14,
+          },
+        },
+      },
+      tooltip: {
+        backgroundColor: '#2e2e34',
+        titleColor: '#ffffff',
+        bodyColor: '#dcdcdc',
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: '#dcdcdc',
+          font: {
+            family: 'Roboto',
+            size: 12,
+          },
+        },
+        grid: {
+          color: '#3f3f46',
+        },
+      },
+      y: {
+        ticks: {
+          color: '#dcdcdc',
+          font: {
+            family: 'Roboto',
+            size: 12,
+          },
+        },
+        grid: {
+          color: '#3f3f46',
+        },
+      },
+    },
+  };
+
   return (
     <div className="stock-detail-page">
-      <button onClick={() => navigate('/market')}>Back to Market</button>
+      <button className="back-button" onClick={() => navigate('/market')}>Back to Market</button>
 
-      <h2>
+      <h2 className="stock-detail-title">
         {stock.name} ({stock.symbol})
       </h2>
+
       <div className="stock-info">
         <p>Current Price: ${stock.price}</p>
         <p>Market Cap: ${stock.marketCap}</p>
@@ -69,7 +113,9 @@ const StockDetail = () => {
       </div>
 
       <h3>Price History (Past 3 Months)</h3>
-      <Line data={chartData} options={{ responsive: true, plugins: { legend: { position: 'top' } } }} />
+      <div className="chart-container">
+        <Line data={chartData} options={chartOptions} />
+      </div>
     </div>
   );
 };
