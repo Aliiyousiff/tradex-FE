@@ -46,8 +46,8 @@ This is the frontend of the StockExchange project, an online platform where user
 
 ### ***Screenshots***
  #### Home Page
- ![Image]( )
+ ![Image](./public/images/homepage.png)
  #### Trading Page  
- ![Image]()
+ ![Image](./public/images/tradingpage.png)
 
  ***
