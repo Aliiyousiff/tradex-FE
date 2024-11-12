@@ -1,4 +1,3 @@
-/* Base Styles */
 body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
@@ -13,10 +12,10 @@ body {
   --text-color: #dcdcdc;
   --card-bg-color: #2e2e34;
   --border-color: #3f3f46;
-  --button-bg-primary: #34c759; /* Green */
-  --button-bg-secondary: #ff3b30; /* Red */
-  --button-bg-tertiary: #ffcc00; /* Yellow */
-  --button-bg-details: #4a90e2; /* Blue */
+  --button-bg-primary: #34c759;
+  --button-bg-secondary: #ff3b30;
+  --button-bg-tertiary: #ffcc00;
+  --button-bg-details: #4a90e2;
   --button-text-color: #ffffff;
 }
 
@@ -32,24 +31,24 @@ body.light-mode {
   --button-text-color: #1a1a1d;
 }
 
-/* Navbar Styles */
 .navbar {
   background: linear-gradient(145deg, #2b2b30, #3c3c43);
-  padding: 10px 20px;
+  padding: 15px 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--border-color);
 }
 
-.navbar-left {
+.navbar-container {
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .navbar-logo-img {
-  width: 80px;
+  width: 100px;
   height: auto;
   transition: transform 0.2s ease;
 }
@@ -60,25 +59,43 @@ body.light-mode {
 
 .navbar-links {
   display: flex;
-  gap: 20px;
+  gap: 30px;
   list-style: none;
+  align-items: center;
+  margin-left: auto;
 }
 
-.navbar-link,
-.logout-button {
+.navbar-link {
   color: var(--text-color);
   text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  transition: background-color 0.2s ease;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease;
 }
 
-.navbar-link:hover,
+.navbar-link:hover {
+  color: var(--button-bg-primary);
+}
+
+.navbar-link svg {
+  margin-right: 8px;
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
 .logout-button:hover {
   background-color: #4a4a50;
 }
 
-/* Dark Mode Toggle Button */
 .toggle-button {
   background: none;
   border: none;
@@ -94,7 +111,6 @@ body.light-mode {
   background-color: #4a4a50;
 }
 
-/* Form Container Styles */
 .form-container {
   max-width: 500px;
   margin: 40px auto;
@@ -128,14 +144,12 @@ button:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Error Message */
 .error-message {
   color: var(--button-bg-secondary);
   font-size: 14px;
   margin: 10px 0;
 }
 
-/* About Us Page */
 .aboutus-container {
   max-width: 800px;
   margin: 40px auto;
@@ -173,7 +187,6 @@ button:hover {
   color: var(--button-bg-primary);
 }
 
-/* Stock List Layout */
 .stock-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -213,7 +226,95 @@ button:hover {
   background: var(--button-bg-details);
 }
 
-/* Responsive Design */
+.hero-section {
+  padding: 50px 0;
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.hero-content p {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.cta-button {
+  background-color: var(--button-bg-details);
+  color: var(--button-text-color);
+  padding: 12px 25px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.cta-button:hover {
+  background-color: #5a9bd8;
+}
+
+.features-section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+
+.feature {
+  text-align: center;
+  width: 30%;
+}
+
+.feature h3 {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.feature p {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.feature svg {
+  color: var(--button-bg-primary);
+}
+
+.cta-section {
+  padding: 40px 0;
+  text-align: center;
+}
+
+.cta-section h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.cta-section p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.footer {
+  background-color: var(--card-bg-color);
+  padding: 20px;
+  text-align: center;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.footer-links a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
@@ -227,7 +328,23 @@ button:hover {
     width: 90%;
   }
 
-  .details-button {
+  .cta-button {
     width: 100%;
+    padding: 15px;
+  }
+
+  .features-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .feature {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 10px;
   }
 }
