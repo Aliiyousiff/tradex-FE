@@ -1,27 +1,45 @@
-import axiosClient from './api'
+// services/auth.js
 
-const API_URL = 'http://localhost:4000'
+import axiosClient from './api';
 
+// Register a new user
 export const RegisterUser = async (userData) => {
-  const response = await axiosClient.post(`${API_URL}/user/register`, userData)
-  return response.data
-}
+  try {
+    const response = await axiosClient.post('/api/auth/register', userData);
+    return response.data;
+  } catch (error) {
+    console.error('Error registering user:', error.response?.data || error.message);
+    throw error;
+  }
+};
 
+// Login a user
 export const SignInUser = async (data) => {
   try {
-    const res = await axiosClient.post(`${API_URL}/user/login`, data)
-    localStorage.setItem('token', res.data.token)
-    return res.data.user
+    const response = await axiosClient.post('/api/auth/login', data);
+    // Save the token to localStorage
+    localStorage.setItem('token', response.data.token);
+    return response.data;
   } catch (error) {
-    throw error
+    if (error.response) {
+      console.error('Error signing in:', error.response.data);
+      console.error('Status code:', error.response.status);
+    } else if (error.request) {
+      console.error('No response received:', error.request);
+    } else {
+      console.error('Error setting up request:', error.message);
+    }
+    throw error;
   }
-}
+};
 
+// Check user session (if implemented in backend)
 export const CheckSession = async () => {
   try {
-    const res = await axiosClient.get(`${API_URL}/user/session`)
-    return res.data
+    const response = await axiosClient.get('/api/auth/check-session');
+    return response.data;
   } catch (error) {
-    throw error
+    console.error('Error checking session:', error.response?.data || error.message);
+    throw error;
   }
-}
+};
