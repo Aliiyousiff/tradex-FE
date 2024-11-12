@@ -32,7 +32,7 @@ const RegisterPage = () => {
 
   return (
     <div className="form-container">
-      <h1 className="register-title">Join LearnTech University!</h1>
+      <h1 className="register-title">Join TradeX!</h1>
       <form onSubmit={handleSubmit} className="register-form">
         <div class="register-box">
           <div className="input-wrapper">
