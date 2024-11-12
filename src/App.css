@@ -31,6 +31,41 @@ body.light-mode {
   --button-text-color: #ffffff;
 }
 
+/* About Us Page Styles */
+.aboutus-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background: var(--card-bg-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+  color: var(--text-color);
+}
+
+.aboutus-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.aboutus-sections .card {
+  padding: 20px;
+  border-radius: 12px;
+  background-color: var(--card-bg-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-color);
+}
+
+.aboutus-sections h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.aboutus-sections p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
 /* App Container */
 .App {
   display: flex;
@@ -162,19 +197,9 @@ button.tertiary {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Primary Button (Green - Buy) */
-button.primary {
-  background: var(--button-bg-primary);
-}
-
 button.primary:hover {
   background: #34d058;
   transform: translateY(-3px);
-}
-
-/* Secondary Button (Red - Sell) */
-button.secondary {
-  background: var(--button-bg-secondary);
 }
 
 button.secondary:hover {
@@ -182,17 +207,11 @@ button.secondary:hover {
   transform: translateY(-3px);
 }
 
-/* Tertiary Button (Blue - Details) */
-button.tertiary {
-  background: var(--button-bg-tertiary);
-}
-
 button.tertiary:hover {
   background: #339af0;
   transform: translateY(-3px);
 }
 
-/* Disabled Button */
 button:disabled {
   background: #3a3a3d;
   color: #b0b0b0;
