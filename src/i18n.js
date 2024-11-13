@@ -3,7 +3,7 @@ import { initReactI18next } from "react-i18next";
 import enTranslation from "./locales/en.json";
 import esTranslation from "./locales/es.json";
 import frTranslation from "./locales/fr.json";
-import arTranslation from "./locales/ar.json"; 
+import arTranslation from "./locales/ar.json";
 
 i18n
   .use(initReactI18next)
@@ -14,10 +14,14 @@ i18n
       fr: { translation: frTranslation },
       ar: { translation: arTranslation },
     },
-    lng: localStorage.getItem("language") || "en", 
-    fallbackLng: "en", 
+    lng: localStorage.getItem("language") || "en",
+    fallbackLng: "en",
     interpolation: {
-      escapeValue: false, 
+      escapeValue: false,
+    },
+    detection: {
+      order: ['localStorage', 'navigator'],
+      caches: ['localStorage'],
     },
   });
 
