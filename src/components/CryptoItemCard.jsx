@@ -1,7 +1,8 @@
 import React from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
-const CryptoItemCard = ({ crypto, onBuy, onSell, onFavorite }) => {
+const CryptoItemCard = ({ crypto, onBuy, onSell, onFavorite, favoriteList }) => {
+  // Default price history for demo purposes
   const cryptoData = crypto.priceHistory || [
     { time: "10 AM", price: crypto.price * 0.98 },
     { time: "11 AM", price: crypto.price * 1.01 },
@@ -9,6 +10,9 @@ const CryptoItemCard = ({ crypto, onBuy, onSell, onFavorite }) => {
     { time: "1 PM", price: crypto.price * 0.99 },
     { time: "2 PM", price: crypto.price * 1.02 },
   ];
+
+  // Check if the crypto is in the user's favorites
+  const isFavorite = favoriteList.some(fav => fav.id === crypto.id);
 
   return (
     <div className="crypto-item-card">
@@ -33,9 +37,19 @@ const CryptoItemCard = ({ crypto, onBuy, onSell, onFavorite }) => {
       </div>
 
       <div className="button-container">
+        {/* Buy Button */}
         <button className="buy-button" onClick={() => onBuy(crypto)}>Buy</button>
+
+        {/* Sell Button */}
         <button className="sell-button" onClick={() => onSell(crypto)}>Sell</button>
-        <button className="favorite-button" onClick={() => onFavorite(crypto)}>Favorite</button>
+
+        {/* Favorite Button (toggle state) */}
+        <button
+          className={`favorite-button ${isFavorite ? 'active' : ''}`}
+          onClick={() => onFavorite(crypto)}
+        >
+          {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+        </button>
       </div>
     </div>
   );
