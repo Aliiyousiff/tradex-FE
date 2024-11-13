@@ -7,7 +7,10 @@ const FavoriteStocks = () => {
   const [error, setError] = useState(null);      // Error state
 
   useEffect(() => {
-    // Fetch the list of favorite stocks
+    fetchFavorites();
+  }, []);
+
+  const fetchFavorites = () => {
     axios.get('/api/user/favorites')
       .then(response => {
         setFavorites(response.data); // Set favorites
@@ -18,9 +21,18 @@ const FavoriteStocks = () => {
         setLoading(false);            // Set loading to false if error occurs
         console.error("Error fetching favorite stocks", error);
       });
-  }, []);
+  };
 
-  // Render loading state, error state, or favorite stocks
+  const removeFavorite = (stockId) => {
+    axios.delete(`/api/user/favorites/${stockId}`)
+      .then(() => {
+        fetchFavorites();  // Refresh the list after deletion
+      })
+      .catch(error => {
+        console.error("Error removing favorite stock", error);
+      });
+  };
+
   if (loading) {
     return <div>Loading your favorite stocks...</div>;
   }
@@ -36,9 +48,10 @@ const FavoriteStocks = () => {
         <p>You don't have any favorite stocks yet.</p>
       ) : (
         <ul>
-          {favorites.map((stock, index) => (
-            <li key={index}>
+          {favorites.map((stock) => (
+            <li key={stock.id}>
               {stock.name} ({stock.symbol})
+              <button onClick={() => removeFavorite(stock.id)}>Remove</button>
             </li>
           ))}
         </ul>
