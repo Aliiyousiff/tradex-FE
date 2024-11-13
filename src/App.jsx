@@ -1,42 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Navbar from './components/Navbar';
+import Nav from './components/Navbar'; // Adjusted import to match the component name
 import Dashboard from './pages/Dashboard';
 import Market from './pages/Market'; // Stock market
 import CryptoMarket from './pages/CryptoMarket'; // Cryptocurrency market
 import Profile from './pages/Profile';
-import Login from './pages/LoginPage';
-import Register from './pages/RegisterPage';
+import LoginPage from './pages/LoginPage'; // Adjusted component names
+import RegisterPage from './pages/RegisterPage';
 import StockDetail from './pages/StockDetail';
 import CryptoDetail from './pages/CryptoDetail'; // Cryptocurrency detail
 import AboutUsPage from './pages/AboutUsPage';
 import HomePage from './pages/HomePage';
 import ContactPage from './pages/ContactPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
-
+import i18n from './i18n';
 import axios from 'axios';
 import './App.css';
 import CurrencyConverterPage from './pages/CurrencyConverterPage';
-
-
 import { useTranslation } from 'react-i18next'; // Import useTranslation hook
 
-// i18next configuration (imported from an external file, here it's embedded for simplicity)
-import i18n from './i18n'; // Import your i18next configuration
-
 const App = () => {
-  const { t, i18n } = useTranslation(); // Initialize i18n for translations
+  const { t } = useTranslation(); // Initialize i18n for translations
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  useEffect(() => {
+  // Function to fetch user session
+  const fetchUserSession = () => {
     const token = localStorage.getItem('authToken');
     if (token) {
       axios
         .get('/api/auth/me', {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         })
         .then((response) => {
           setUser(response.data);
@@ -45,7 +41,13 @@ const App = () => {
         .catch(() => {
           setIsAuthenticated(false);
         });
+    } else {
+      setIsAuthenticated(false);
     }
+  };
+
+  useEffect(() => {
+    fetchUserSession();
   }, []);
 
   const handleLogout = () => {
@@ -130,67 +132,87 @@ const App = () => {
 
   return (
     <div className="App">
-      <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route
-          path="/login"
-          element={
-            <Login setIsAuthenticated={setIsAuthenticated} setUser={setUser} />
-          }
-        />
-        <Route path="/register" element={<Register />} />
-        <Route
-          path="/market"
-          element={
-            isAuthenticated ? (
-              <Market
-                onBuy={handleBuyStock}
-                onSell={handleSellStock}
-                onFavorite={handleAddToFavorites}
-              />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
-        <Route
-          path="/cryptomarket"
-          element={
-            isAuthenticated ? (
-              <CryptoMarket
-                onBuy={handleBuyCrypto}
-                onSell={handleSellCrypto}
-                onFavorite={handleAddToFavoritesCrypto}
-              />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            isAuthenticated ? (
-              <Dashboard user={user} />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
-        <Route
-          path="/profile"
-          element={isAuthenticated ? <Profile /> : <Navigate to="/login" />}
-        />
-        <Route path="/stockdetail" element={<StockDetail />} />
-        <Route path="/cryptodetail" element={<CryptoDetail />} />
-        <Route path="/aboutus" element={<AboutUsPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/privacy" element={<PrivacyPolicyPage />} />
-        <Route path="/currency-converter" element={<CurrencyConverterPage />} />
+      <div className="container">
+        <Nav user={user} handleLogout={handleLogout} />
+        <main>
+          <Routes>
+            {/* User routes */}
+            <Route path="/" element={<HomePage />} />
+            <Route
+              path="/login"
+              element={
+                <LoginPage
+                  setUser={setUser}
+                  fetchUserSession={fetchUserSession}
+                  setIsAuthenticated={setIsAuthenticated}
+                />
+              }
+            />
+            <Route path="/register" element={<RegisterPage />} />
 
-        <Route path="*" element={<h1>404 - Page Not Found</h1>} />
-      </Routes>
+            {/* Protected routes */}
+            <Route
+              path="/market"
+              element={
+                isAuthenticated ? (
+                  <Market
+                    onBuy={handleBuyStock}
+                    onSell={handleSellStock}
+                    onFavorite={handleAddToFavorites}
+                  />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            />
+            <Route
+              path="/cryptomarket"
+              element={
+                isAuthenticated ? (
+                  <CryptoMarket
+                    onBuy={handleBuyCrypto}
+                    onSell={handleSellCrypto}
+                    onFavorite={handleAddToFavoritesCrypto}
+                  />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                isAuthenticated ? (
+                  <Dashboard user={user} />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                isAuthenticated ? (
+                  <Profile user={user} />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            />
+
+            {/* Public routes */}
+            <Route path="/stockdetail" element={<StockDetail />} />
+            <Route path="/cryptodetail" element={<CryptoDetail />} />
+            <Route path="/aboutus" element={<AboutUsPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/privacy" element={<PrivacyPolicyPage />} />
+            <Route path="/currency-converter" element={<CurrencyConverterPage />} />
+
+            {/* Catch-all route */}
+            <Route path="*" element={<h1>404 - Page Not Found</h1>} />
+          </Routes>
+        </main>
+      </div>
     </div>
   );
 };

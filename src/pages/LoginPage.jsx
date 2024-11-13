@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SignInUser } from '../services/Auth';
@@ -6,8 +5,9 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
 const LoginPage = ({ setUser, fetchUserSession }) => {
+  console.log("fetchUserSession", fetchUserSession)
   const navigate = useNavigate();
-  const initialState = { identifier: '', password: '' };
+  const initialState = { username: '', password: '' }; // Changed 'identifier' to 'username'
   const [formValues, setFormValues] = useState(initialState);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -17,16 +17,18 @@ const LoginPage = ({ setUser, fetchUserSession }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form values:', formValues); 
+    console.log('Form values:', formValues);
     try {
       const payload = await SignInUser(formValues);
+      console.log('Received payload:', payload); // Added for debugging
       setFormValues(initialState);
       setUser(payload);
       localStorage.setItem('user', JSON.stringify(payload));
       fetchUserSession();
       navigate('/');
     } catch (error) {
-      setErrorMessage('Invalid username/email or password. Please try again.');
+      console.error('Error during login:', error.response?.data || error.message); // Added for debugging
+      setErrorMessage('Invalid username or password. Please try again.');
     }
   };
 
@@ -41,12 +43,12 @@ const LoginPage = ({ setUser, fetchUserSession }) => {
         >
           <TextField
             onChange={handleChange}
-            id="outlined-identifier"
-            label="Username or Email"
-            name="identifier" 
+            id="outlined-username"
+            label="Username" // Changed label
+            name="username" // Changed 'identifier' to 'username'
             type="text"
-            placeholder="Enter your username or email"
-            value={formValues.identifier}
+            placeholder="Enter your username" // Changed placeholder
+            value={formValues.username} // Changed 'identifier' to 'username'
             required
             variant="outlined"
           />
