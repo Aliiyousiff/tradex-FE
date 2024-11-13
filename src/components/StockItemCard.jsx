@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   LineChart,
   Line,
@@ -6,10 +6,10 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer
-} from 'recharts'
+} from 'recharts';
 
 // StockItemCard Component
-const StockItemCard = ({ stock, onBuy, onSell, onFavorite, favoriteList }) => {
+const StockItemCard = ({ stock, onBuy, onSell, onFavorite, isAuthenticated, favoriteList }) => {
   // Default stock price history for demo purposes
   const stockData = stock.history || [
     { time: '10 AM', price: stock.price * 0.98 },
@@ -17,10 +17,10 @@ const StockItemCard = ({ stock, onBuy, onSell, onFavorite, favoriteList }) => {
     { time: '12 PM', price: stock.price },
     { time: '1 PM', price: stock.price * 0.99 },
     { time: '2 PM', price: stock.price * 1.02 }
-  ]
+  ];
 
   // Check if the stock is in the user's favorites
-  const isFavorite = favoriteList?.some((fav) => fav.id === stock.id)
+  const isFavorite = favoriteList?.some((fav) => fav.id === stock.id);
 
   return (
     <div className="stock-item-card">
@@ -50,26 +50,33 @@ const StockItemCard = ({ stock, onBuy, onSell, onFavorite, favoriteList }) => {
       </div>
 
       <div className="button-container">
-        {/* Buy Button */}
-        <button className="buy-button" onClick={() => onBuy(stock)}>
-          Buy
-        </button>
+        {/* Conditionally render Buy, Sell, and Favorite buttons only for authenticated users */}
+        {isAuthenticated ? (
+          <>
+            {/* Buy Button */}
+            <button className="buy-button" onClick={() => onBuy(stock)}>
+              Buy
+            </button>
 
-        {/* Sell Button */}
-        <button className="sell-button" onClick={() => onSell(stock)}>
-          Sell
-        </button>
+            {/* Sell Button */}
+            <button className="sell-button" onClick={() => onSell(stock)}>
+              Sell
+            </button>
 
-        {/* Favorite Button (toggle state) */}
-        <button
-          className={`favorite-button ${isFavorite ? 'active' : ''}`}
-          onClick={() => onFavorite(stock)}
-        >
-          {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-        </button>
+            {/* Favorite Button (toggle state) */}
+            <button
+              className={`favorite-button ${isFavorite ? 'active' : ''}`}
+              onClick={() => onFavorite(stock)}
+            >
+              {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+            </button>
+          </>
+        ) : (
+          <p>Please log in to buy, sell, or favorite this stock.</p>
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default StockItemCard
+export default StockItemCard;
