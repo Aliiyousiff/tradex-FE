@@ -1,31 +1,29 @@
-import React, { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   FaSignOutAlt,
   FaUser,
-  FaChartLine,
   FaStore,
   FaSun,
   FaMoon,
   FaInfoCircle,
   FaBitcoin,
-} from "react-icons/fa"
-import { useTranslation } from "react-i18next"
-import LanguageSelector from "./languageSelector"
+} from "react-icons/fa";
+import { useTranslation } from "react-i18next";
+import LanguageSelector from "./languageSelector";
 
 const Navbar = ({ isAuthenticated, onLogout, user }) => {
-  console.log("user", user)
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("darkMode") === "true" || false
-  )
+  );
 
   const toggleDarkMode = () => {
-    const newDarkMode = !darkMode
-    setDarkMode(newDarkMode)
-    document.body.classList.toggle("light-mode", !newDarkMode)
-    localStorage.setItem("darkMode", newDarkMode)
-  }
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+    document.body.classList.toggle("light-mode", !newDarkMode);
+    localStorage.setItem("darkMode", newDarkMode);
+  };
 
   return (
     <nav className="navbar">
@@ -59,25 +57,22 @@ const Navbar = ({ isAuthenticated, onLogout, user }) => {
               <FaInfoCircle /> {t("aboutUs")}
             </Link>
           </li>
-          <li>
-            <Link to="/contact" className="navbar-link">
-              {t("contact")}
-            </Link>
-          </li>
-          <li>
-            <Link to="/privacy" className="navbar-link">
-              {t("privacyPolicy")}
-            </Link>
-          </li>
-          {isAuthenticated ? (
+
+          {isAuthenticated && user ? (
             <>
               <li>
                 <Link to="/profile" className="navbar-link">
-                  <FaUser /> {t("profile")}
+                  <FaUser /> {t("profile")} ({user.username})
                 </Link>
               </li>
               <li>
-                <button onClick={onLogout} className="logout-button">
+                <button
+                  onClick={() => {
+                    console.log("Logout button clicked");
+                    onLogout();
+                  }}
+                  className="logout-button"
+                >
                   <FaSignOutAlt /> {t("logout")}
                 </button>
               </li>
@@ -99,13 +94,12 @@ const Navbar = ({ isAuthenticated, onLogout, user }) => {
         </ul>
 
         <LanguageSelector />
-
         <button onClick={toggleDarkMode} className="toggle-button">
           {darkMode ? <FaSun /> : <FaMoon />}
         </button>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

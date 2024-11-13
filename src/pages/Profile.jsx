@@ -1,28 +1,51 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [favorites, setFavorites] = useState({ stocks: [], cryptos: [] });
   const [wallet, setWallet] = useState([]);
   const [balance, setBalance] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Fetch user profile data
   useEffect(() => {
-    axios.get('/api/user')
-      .then(response => {
-        setUser(response.data);
-        setBalance(response.data.balance);
-        setFavorites({
-          stocks: response.data.favorites.stocks || [],
-          cryptos: response.data.favorites.cryptos || [],
-        });
-        setWallet(response.data.wallet || []);
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setError("User not authenticated.");
+      setLoading(false);
+      return;
+    }
+
+    axios
+      .get("/api/profile/details", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .catch(error => console.error("Error fetching user profile:", error));
+      .then((response) => {
+        const userData = response.data;
+        setUser(userData);
+        setBalance(userData.balance || 0);
+        setFavorites({
+          stocks: userData.favorites?.stocks || [],
+          cryptos: userData.favorites?.cryptos || [],
+        });
+        setWallet(userData.wallet || []);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching user profile:", error);
+        setError("Failed to fetch user profile.");
+        setLoading(false);
+      });
   }, []);
 
-  if (!user) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+  if (!user) return <div>No user data available.</div>;
 
   return (
     <div className="profile-container">
