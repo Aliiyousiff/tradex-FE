@@ -347,4 +347,87 @@ button:hover {
     flex-direction: column;
     gap: 10px;
   }
+  .language-selector {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+  }
+  
+  .language-dropdown {
+    margin-left: 5px;
+    padding: 5px;
+    font-size: 14px;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .language-dropdown:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  .toggle-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  
+  .navbar-links {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    justify-content: space-between;
+  }
+  
+  .navbar-link {
+    text-decoration: none;
+    color: inherit;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .navbar-link:hover {
+    color: #007bff;
+  }
+  .language-selector {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+  }
+  
+  .language-dropdown {
+    margin-left: 10px;
+    padding: 5px 12px;
+    font-size: 16px;
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .language-dropdown:focus {
+    outline: none;
+    border-color: var(--button-bg-primary);
+  }
+  
+  .language-dropdown:hover {
+    background-color: #4a4a50;  /* Match the hover style of other buttons */
+    color: var(--button-bg-primary);
+  }
+  
+  .language-dropdown option {
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+  }
+  
+  .language-dropdown option:hover {
+    background-color: #333;
+  }
 }
+
