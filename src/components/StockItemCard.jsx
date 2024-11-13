@@ -20,7 +20,7 @@ const StockItemCard = ({ stock, onBuy, onSell, onFavorite, favoriteList }) => {
   ]
 
   // Check if the stock is in the user's favorites
-  const isFavorite = favoriteList.some((fav) => fav.id === stock.id)
+  const isFavorite = favoriteList?.some((fav) => fav.id === stock.id)
 
   return (
     <div className="stock-item-card">

@@ -12,7 +12,7 @@ const CryptoItemCard = ({ crypto, onBuy, onSell, onFavorite, favoriteList }) => 
   ];
 
   // Check if the crypto is in the user's favorites
-  const isFavorite = favoriteList.some(fav => fav.id === crypto.id);
+  const isFavorite = favoriteList?.some(fav => fav.id === crypto.id);
 
   return (
     <div className="crypto-item-card">

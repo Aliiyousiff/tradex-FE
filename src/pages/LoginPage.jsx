@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
 const LoginPage = ({ setUser, fetchUserSession }) => {
-  console.log("fetchUserSession", fetchUserSession)
+  // console.log("fetchUserSession", fetchUserSession)
   const navigate = useNavigate();
   const initialState = { username: '', password: '' }; // Changed 'identifier' to 'username'
   const [formValues, setFormValues] = useState(initialState);
