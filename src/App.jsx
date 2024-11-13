@@ -28,41 +28,46 @@ const App = () => {
     fetchUserSession();
   }, []);
 
-  // Updated fetchUserSession function
-  const fetchUserSession = () => {
+  // Fetch the current user session
+  const fetchUserSession = async () => {
     const token = localStorage.getItem("token");
     console.log("Fetching user session, token:", token);
 
-    if (token) {
-      axios
-        .get("http://localhost:4000/api/profile/details", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          console.log("User session response:", response.data);
-          setUser(response.data);
-          setIsAuthenticated(true);
-        })
-        .catch((error) => {
-          if (error.response && error.response.status === 404) {
-            console.error("Profile route not found:", error.response.data);
-            alert("Profile route not found. Please check your backend route.");
-          } else {
-            console.error("Error fetching user session:", error);
-          }
-          setIsAuthenticated(false);
-          setUser(null);
-        });
-    } else {
-      console.log("No token found, setting user as logged out.");
+    if (!token) {
+      console.log("No token found, user is not authenticated.");
+      setIsAuthenticated(false);
+      setUser(null);
+      return;
+    }
+
+    try {
+      const response = await axios.get("http://localhost:4000/api/profile/details", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log("User session response:", response.data);
+      setUser(response.data);
+      setIsAuthenticated(true);
+    } catch (error) {
+      console.error("Error fetching user session:", error.response?.data || error.message);
+
+      // Check for specific errors and provide user-friendly messages
+      if (error.response && error.response.status === 400) {
+        alert("Session expired. Please log in again.");
+      } else if (error.response && error.response.status === 401) {
+        alert("Unauthorized. Please log in.");
+      } else if (error.response && error.response.status >= 500) {
+        alert("Internal server error. Please check your backend.");
+      }
+
       setIsAuthenticated(false);
       setUser(null);
     }
   };
 
-  // Updated handleLogout function
+  // Handle user logout
   const handleLogout = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -72,9 +77,8 @@ const App = () => {
         return;
       }
 
-      console.log("Logout button clicked, token:", token);
+      console.log("Logout initiated, token:", token);
 
-      // Call the backend logout endpoint
       const response = await axios.post(
         "http://localhost:4000/api/auth/logout",
         {},
@@ -88,25 +92,17 @@ const App = () => {
       if (response.status === 200) {
         console.log("Logout successful");
 
-        // Clear local storage explicitly
         localStorage.removeItem("token");
-        localStorage.removeItem("user");
-
-        // Reset state
         setUser(null);
         setIsAuthenticated(false);
 
-        // Ensure the user session is reset
-        fetchUserSession();
-
-        // Redirect to the login page
         window.location.href = "/login";
       } else {
         console.error("Logout failed:", response.data.message);
         alert("Logout failed. Please try again.");
       }
     } catch (error) {
-      console.error("Error during logout:", error);
+      console.error("Error during logout:", error.response?.data || error.message);
       alert("An error occurred during logout. Please try again.");
     }
   };
@@ -124,54 +120,17 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route
               path="/login"
-              element={
-                <LoginPage
-                  setUser={setUser}
-                  fetchUserSession={fetchUserSession}
-                  setIsAuthenticated={setIsAuthenticated}
-                />
-              }
+              element={<LoginPage setUser={setUser} fetchUserSession={fetchUserSession} setIsAuthenticated={setIsAuthenticated} />}
             />
             <Route path="/register" element={<RegisterPage />} />
-            <Route
-              path="/market"
-              element={
-                isAuthenticated ? <Market /> : <Navigate to="/login" />
-              }
-            />
-            <Route
-              path="/cryptomarket"
-              element={
-                isAuthenticated ? <CryptoMarket /> : <Navigate to="/login" />
-              }
-            />
-            <Route
-              path="/dashboard"
-              element={
-                isAuthenticated ? (
-                  <Dashboard user={user} />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                isAuthenticated ? (
-                  <Profile user={user} />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
+            <Route path="/market" element={isAuthenticated ? <Market /> : <Navigate to="/login" replace />} />
+            <Route path="/cryptomarket" element={isAuthenticated ? <CryptoMarket /> : <Navigate to="/login" replace />} />
+            <Route path="/dashboard" element={isAuthenticated ? <Dashboard user={user} /> : <Navigate to="/login" replace />} />
+            <Route path="/profile" element={isAuthenticated ? <Profile user={user} /> : <Navigate to="/login" replace />} />
             <Route path="/aboutus" element={<AboutUsPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/privacy" element={<PrivacyPolicyPage />} />
-            <Route
-              path="/currency-converter"
-              element={<CurrencyConverterPage />}
-            />
+            <Route path="/currency-converter" element={<CurrencyConverterPage />} />
             <Route path="*" element={<h1>404 - Page Not Found</h1>} />
           </Routes>
         </main>

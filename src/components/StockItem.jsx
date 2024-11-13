@@ -1,10 +1,9 @@
 import React from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
-const StockItemCard = ({ stock, onBuy, onSell, onFavorite, isAuthenticated, favoriteList }) => {
+const StockItemCard = ({ stock, onBuy, onSell, onFavorite }) => {
   if (!stock) return null;
 
-  // Default price history for demo purposes
   const stockData = stock.history || [
     { time: "10 AM", price: stock.price * 0.98 },
     { time: "11 AM", price: stock.price * 1.01 },
@@ -12,9 +11,6 @@ const StockItemCard = ({ stock, onBuy, onSell, onFavorite, isAuthenticated, favo
     { time: "1 PM", price: stock.price * 0.99 },
     { time: "2 PM", price: stock.price * 1.02 },
   ];
-
-  // Check if the stock is in the user's favorites
-  const isFavorite = favoriteList?.some(fav => fav.id === stock.id);
 
   return (
     <div className="stock-item-card">
@@ -39,26 +35,9 @@ const StockItemCard = ({ stock, onBuy, onSell, onFavorite, isAuthenticated, favo
       </div>
 
       <div className="button-container">
-        {/* Show Buy, Sell, and Favorite buttons only for authenticated users */}
-        {isAuthenticated ? (
-          <>
-            {/* Buy Button */}
-            <button className="buy-button" onClick={() => onBuy(stock)}>Buy</button>
-
-            {/* Sell Button */}
-            <button className="sell-button" onClick={() => onSell(stock)}>Sell</button>
-
-            {/* Favorite Button (toggle state) */}
-            <button
-              className={`favorite-button ${isFavorite ? 'active' : ''}`}
-              onClick={() => onFavorite(stock)}
-            >
-              {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-            </button>
-          </>
-        ) : (
-          <p>Please log in to buy, sell, or favorite this stock.</p>
-        )}
+        <button className="buy-button" onClick={() => onBuy(stock)}>Buy</button>
+        <button className="sell-button" onClick={() => onSell(stock)}>Sell</button>
+        <button className="favorite-button" onClick={() => onFavorite(stock)}>Favorite</button>
       </div>
     </div>
   );

@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom' // Import useNavigate for navigation
-import axios from 'axios'
-import StockItemCard from '../components/StockItemCard' // Assume this is a separate component
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import StockItemCard from '../components/StockItemCard';
 
-const Market = ({ onBuy, onSell, onFavorite }) => {
-  const [stocks, setStocks] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const navigate = useNavigate() // Initialize useNavigate
+const Market = () => {
+  const [stocks, setStocks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   // Fake stock data for the market (with 17 total stocks now)
   const fakeStockData = [
@@ -208,45 +208,107 @@ const Market = ({ onBuy, onSell, onFavorite }) => {
     setStocks(fakeStockData)
     setLoading(false)
   }, [])
-
-  // Navigate to StockDetail page with the selected stock
-  const handleStockSelect = (stock) => {
-    navigate('/stockdetail', { state: { stock } }) // Pass stock data to the detail page
+// Handle Buy action
+const handleBuy = async (stock) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:4000/api/trade/create",
+      {
+        symbol: stock.symbol,
+        quantity: 1,
+        price: stock.price,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    console.log("Trade created successfully:", response.data);
+    alert("Stock purchased successfully!");
+  } catch (error) {
+    console.error("Error buying stock:", error.response?.data || error.message);
+    alert("Failed to purchase stock.");
   }
+};
 
-  // Loading and error handling
-  if (loading) {
-    return <div>Loading...</div>
+// Handle Sell action
+const handleSell = async (stock) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:4000/api/trade/create",
+      {
+        symbol: stock.symbol,
+        quantity: -1, // Negative quantity to indicate sell
+        price: stock.price,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    console.log("Stock sold successfully:", response.data.message);
+    alert("Stock sold successfully!");
+  } catch (error) {
+    console.error("Error selling stock:", error.response?.data || error.message);
+    alert("Failed to sell stock.");
   }
+};
 
-  if (error) {
-    return <div>{error}</div>
+// Handle Add to Favorites action
+const handleAddToFavorites = async (stock) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:4000/api/trade/favorites/add",
+      {
+        symbol: stock.symbol,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    console.log(response.data.message);
+    alert(response.data.message);
+  } catch (error) {
+    console.error("Error adding to favorites:", error.response?.data || error.message);
+    alert("Failed to add to favorites.");
   }
+};
 
-  return (
-    <div>
-      <h1>Stock Market</h1>
-      <div className="stock-list">
-        {stocks.length > 0 ? (
-          stocks.map((stock) => (
-            <div key={stock.symbol} className="stock-item">
-              <StockItemCard
-                stock={stock}
-                onBuy={onBuy}
-                onSell={onSell}
-                onFavorite={onFavorite}
-              />
-              <button onClick={() => handleStockSelect(stock)}>
-                View Details
-              </button>
-            </div>
-          ))
-        ) : (
-          <div>No stocks available</div>
-        )}
-      </div>
+// Navigate to StockDetail page
+const handleStockSelect = (stock) => {
+  navigate('/stockdetail', { state: { stock } });
+};
+
+// Loading and error handling
+if (loading) return <div>Loading...</div>;
+if (error) return <div>{error}</div>;
+
+return (
+  <div>
+    <h1>Stock Market</h1>
+    <div className="stock-list">
+      {stocks.length > 0 ? (
+        stocks.map((stock) => (
+          <div key={stock.symbol} className="stock-item">
+            <StockItemCard
+              stock={stock}
+              onBuy={handleBuy}
+              onSell={handleSell}
+              onFavorite={handleAddToFavorites}
+            />
+            <button onClick={() => handleStockSelect(stock)}>View Details</button>
+          </div>
+        ))
+      ) : (
+        <div>No stocks available</div>
+      )}
     </div>
-  )
-}
+  </div>
+);
+};
 
-export default Market
+export default Market;
