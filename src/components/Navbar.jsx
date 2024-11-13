@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   FaSignOutAlt,
   FaUser,
+  FaChartLine,
   FaStore,
   FaSun,
   FaMoon,
@@ -12,11 +13,9 @@ import {
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "./languageSelector";
 
-const Navbar = ({ isAuthenticated, onLogout, user }) => {
+const Navbar = ({ isAuthenticated, onLogout }) => {
   const { t } = useTranslation();
-  const [darkMode, setDarkMode] = useState(
-    localStorage.getItem("darkMode") === "true" || false
-  );
+  const [darkMode, setDarkMode] = useState(localStorage.getItem("darkMode") === "true" || false);
 
   const toggleDarkMode = () => {
     const newDarkMode = !darkMode;
@@ -29,11 +28,7 @@ const Navbar = ({ isAuthenticated, onLogout, user }) => {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          <img
-            src="/images/logo.png"
-            alt="TradeX Logo"
-            className="navbar-logo-img"
-          />
+          <img src="/images/logo.png" alt="TradeX Logo" className="navbar-logo-img" />
         </Link>
 
         <ul className="navbar-links">
@@ -57,22 +52,25 @@ const Navbar = ({ isAuthenticated, onLogout, user }) => {
               <FaInfoCircle /> {t("aboutUs")}
             </Link>
           </li>
-
-          {isAuthenticated && user ? (
+          <li>
+            <Link to="/contact" className="navbar-link">
+              {t("contact")}
+            </Link>
+          </li>
+          <li>
+            <Link to="/privacy" className="navbar-link">
+              {t("privacyPolicy")}
+            </Link>
+          </li>
+          {isAuthenticated ? (
             <>
               <li>
                 <Link to="/profile" className="navbar-link">
-                  <FaUser /> {t("profile")} ({user.username})
+                  <FaUser /> {t("profile")}
                 </Link>
               </li>
               <li>
-                <button
-                  onClick={() => {
-                    console.log("Logout button clicked");
-                    onLogout();
-                  }}
-                  className="logout-button"
-                >
+                <button onClick={onLogout} className="logout-button">
                   <FaSignOutAlt /> {t("logout")}
                 </button>
               </li>
@@ -80,26 +78,32 @@ const Navbar = ({ isAuthenticated, onLogout, user }) => {
           ) : (
             <>
               <li>
-                <Link to="/login" className="navbar-link">
-                  {t("login")}
-                </Link>
+                <Link to="/login" className="navbar-link">{t("login")}</Link>
               </li>
               <li>
-                <Link to="/register" className="navbar-link">
-                  {t("register")}
-                </Link>
+                <Link to="/register" className="navbar-link">{t("register")}</Link>
               </li>
             </>
           )}
         </ul>
-
+        <ul>
         <LanguageSelector />
-        <button onClick={toggleDarkMode} className="toggle-button">
-          {darkMode ? <FaSun /> : <FaMoon />}
-        </button>
+        </ul>
+        <ul>
+        <div className={`toggle-switch ${darkMode ? 'dark-mode-on' : ''}`} onClick={toggleDarkMode}>
+    <div className="toggle-handle"></div>
+</div>
+</ul>
       </div>
     </nav>
   );
 };
 
 export default Navbar;
+
+
+
+
+
+
+

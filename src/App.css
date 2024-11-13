@@ -21,7 +21,7 @@ body {
 
 body.light-mode {
   --bg-color: #e5e5e5;
-  --text-color: #1a1a1d;
+  --text-color: #6e6b6b;
   --card-bg-color: #f0f0f0;
   --border-color: #b0b0b0;
   --button-bg-primary: #5dade2;
@@ -33,7 +33,7 @@ body.light-mode {
 
 .navbar {
   background: linear-gradient(145deg, #2b2b30, #3c3c43);
-  padding: 15px 40px;
+  padding: 20px 50px; /* Increased padding for larger height */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -48,18 +48,18 @@ body.light-mode {
 }
 
 .navbar-logo-img {
-  width: 100px;
+  width: 120px; /* Slightly larger logo */
   height: auto;
   transition: transform 0.2s ease;
 }
 
 .navbar-logo-img:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
 .navbar-links {
   display: flex;
-  gap: 30px;
+  gap: 40px; /* Increased gap for better spacing */
   list-style: none;
   align-items: center;
   margin-left: auto;
@@ -68,7 +68,7 @@ body.light-mode {
 .navbar-link {
   color: var(--text-color);
   text-decoration: none;
-  font-size: 16px;
+  font-size: 18px; /* Larger font size for better readability */
   display: flex;
   align-items: center;
   transition: color 0.3s ease;
@@ -79,35 +79,22 @@ body.light-mode {
 }
 
 .navbar-link svg {
-  margin-right: 8px;
+  margin-right: 10px;
 }
 
-.logout-button {
+.logout-button, .toggle-button {
   background: none;
   border: none;
   color: var(--text-color);
+  font-size: 22px; /* Larger icons for better interaction */
   cursor: pointer;
   display: flex;
   align-items: center;
+  padding: 12px 18px; /* Increased padding for a better touch area */
   transition: background-color 0.3s ease;
 }
 
-.logout-button:hover {
-  background-color: #4a4a50;
-}
-
-.toggle-button {
-  background: none;
-  border: none;
-  color: var(--text-color);
-  font-size: 22px;
-  cursor: pointer;
-  padding: 10px;
-  border-radius: 50%;
-  transition: background-color 0.3s ease;
-}
-
-.toggle-button:hover {
+.logout-button:hover, .toggle-button:hover {
   background-color: #4a4a50;
 }
 
@@ -539,4 +526,38 @@ button:hover {
   font-size: 16px;
   color: var(--text-color);
   text-align: center;
+}
+
+/* Toggle Switch Base Styles */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px; /* Adjust width as necessary */
+  height: 34px; /* Adjust height as necessary */
+  background-color: #ccc; /* Background for the off state */
+  border-radius: 34px; /* Rounded corners for a pill shape */
+  transition: background-color 0.4s; /* Smooth transition for background color */
+  cursor: pointer;
+}
+
+/* Toggle Handle */
+.toggle-handle {
+  position: absolute;
+  top: 2px; /* Slight spacing from top to center the handle vertically */
+  left: 2px; /* Start from the left when dark mode is off */
+  width: 30px; /* Diameter of the handle, ensure it's less than the height of the switch */
+  height: 30px; /* Same as width to make it circular */
+  background-color: #fff; /* White handle */
+  border-radius: 50%; /* Circle shape */
+  transition: transform 0.4s ease-in-out; /* Smooth sliding transition */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Optional: shadow for better visibility */
+}
+
+/* Toggle the switch when dark mode is active */
+.dark-mode-on {
+  background-color: #4a90e2; /* Change to your preferred color when dark mode is on */
+}
+
+.dark-mode-on .toggle-handle {
+  transform: translateX(26px); /* Move handle to the right; adjust distance based on width of the switch */
 }
