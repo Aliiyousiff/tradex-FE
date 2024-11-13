@@ -48,6 +48,11 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
               </li>
             </>
           )}
+           <li>
+            <Link to="/currency-converter" className="navbar-link">
+              <FaBitcoin /> {t('currencyConverter')}
+            </Link>
+          </li>
           <li>
             <Link to="/aboutus" className="navbar-link">
               <FaInfoCircle /> {t('aboutUs')} 

@@ -429,5 +429,88 @@ button:hover {
   .language-dropdown option:hover {
     background-color: #333;
   }
+  .currency-converter-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: var(--card-bg-color);
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: var(--text-color);
+  }
+  
+  .converter-card {
+    padding: 20px;
+    background-color: var(--card-bg-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  .input-group label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: var(--text-color);
+  }
+  
+  input,
+  select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--button-bg-primary);
+    color: var(--button-text-color);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .error-message {
+    color: var(--button-bg-secondary);
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
+  .result {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .result h2 {
+    font-size: 20px;
+    color: var(--text-color);
+  }
+  
+  .result p {
+    font-size: 18px;
+    color: var(--text-color);
+  }
+  
 }
 

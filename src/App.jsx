@@ -16,6 +16,8 @@ import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 
 import axios from 'axios';
 import './App.css';
+import CurrencyConverterPage from './pages/CurrencyConverterPage';
+
 
 import { useTranslation } from 'react-i18next'; // Import useTranslation hook
 
@@ -185,6 +187,8 @@ const App = () => {
         <Route path="/aboutus" element={<AboutUsPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/privacy" element={<PrivacyPolicyPage />} />
+        <Route path="/currency-converter" element={<CurrencyConverterPage />} />
+
         <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>
     </div>
