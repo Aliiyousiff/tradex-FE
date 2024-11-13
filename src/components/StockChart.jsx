@@ -8,8 +8,8 @@ const StockChart = ({ stockSymbol }) => {
   useEffect(() => {
     // Fetch stock data for the chart
     axios.get(`/api/stocks/${stockSymbol}/chart`)
-      .then(response => setData(response.data))
-      .catch(error => console.error("Error fetching stock data", error));
+      .then((response) => setData(response.data))
+      .catch((error) => console.error('Error fetching stock data:', error));
   }, [stockSymbol]);
 
   return (

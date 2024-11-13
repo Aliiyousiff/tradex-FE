@@ -33,22 +33,17 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
           <img src="/images/logo.png" alt="TradeX Logo" className="navbar-logo-img" />
         </Link>
         <ul className="navbar-links">
-          
-          {isAuthenticated && (
-            <>
-              <li>
-                <Link to="/market" className="navbar-link">
-                  <FaStore /> {t('market')} 
-                </Link>
-              </li>
-              <li>
-                <Link to="/cryptomarket" className="navbar-link">
-                  <FaBitcoin /> {t('cryptoMarket')} 
-                </Link>
-              </li>
-            </>
-          )}
-           <li>
+          <li>
+            <Link to="/market" className="navbar-link">
+              <FaStore /> {t('market')} 
+            </Link>
+          </li>
+          <li>
+            <Link to="/cryptomarket" className="navbar-link">
+              <FaBitcoin /> {t('cryptoMarket')} 
+            </Link>
+          </li>
+          <li>
             <Link to="/currency-converter" className="navbar-link">
               <FaBitcoin /> {t('currencyConverter')}
             </Link>
@@ -68,34 +63,12 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
               {t('privacyPolicy')} 
             </Link>
           </li>
-          {isAuthenticated ? (
-            <>
-              <li>
-                <Link to="/dashboard" className="navbar-link">
-                  <FaChartLine /> {t('dashboard')} 
-                </Link>
-              </li>
-              <li>
-                <Link to="/profile" className="navbar-link">
-                  <FaUser /> {t('profile')} 
-                </Link>
-              </li>
-              <li>
-                <button onClick={onLogout} className="logout-button">
-                  <FaSignOutAlt /> {t('logout')} 
-                </button>
-              </li>
-            </>
-          ) : (
-            <>
-              <li>
-                <Link to="/login" className="navbar-link">{t('login')}</Link>
-              </li>
-              <li>
-                <Link to="/register" className="navbar-link">{t('register')}</Link>
-              </li>
-            </>
-          )}
+          <li>
+            <Link to="/login" className="navbar-link">{t('login')}</Link>
+          </li>
+          <li>
+            <Link to="/register" className="navbar-link">{t('register')}</Link>
+          </li>
         </ul>
       </div>
 

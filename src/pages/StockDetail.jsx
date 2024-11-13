@@ -9,7 +9,7 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 } from 'chart.js';
 
 // Registering necessary Chart.js components
@@ -47,8 +47,8 @@ const StockDetail = () => {
         pointBackgroundColor: '#34c759',
         pointBorderColor: '#ffffff',
         tension: 0.3,
-      }
-    ]
+      },
+    ],
   };
 
   const chartOptions = {

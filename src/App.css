@@ -187,20 +187,21 @@ button:hover {
   color: var(--button-bg-primary);
 }
 
+.crypto-list,
 .stock-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
   padding: 20px;
 }
-
+.crypto-item-card,
 .stock-item-card {
   background: var(--card-bg-color);
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
-
+.crypto-chart,
 .stock-chart {
   margin: 20px 0;
 }
