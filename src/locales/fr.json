@@ -22,5 +22,6 @@
   "address": "Bâtiment 1306, Route 4625, Front de Mer de Manama, 346 Royaume de Bahreïn, Boîte Postale 20525",
   "call": "Appeler",
   "email": "Email",
-  "fax": "Fax"
+  "fax": "Fax",
+    "currencyConverter": "Convertisseur de Monnaie"
 }

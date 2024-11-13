@@ -22,5 +22,7 @@
   "english": "إنجليزي",
   "spanish": "إسباني",
   "french": "فرنسي",
-  "arabic": "عربي"
+  "arabic": "عربي",
+
+  "currencyConverter": "محول العملات"
 }
