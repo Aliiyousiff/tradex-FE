@@ -1,147 +1,126 @@
-import React, { useState, useEffect } from "react"
-import { Routes, Route, Navigate } from "react-router-dom"
-import Nav from "./components/Navbar" // Adjusted import to match the component name
-import Dashboard from "./pages/Dashboard"
-import Market from "./pages/Market" // Stock market
-import CryptoMarket from "./pages/CryptoMarket" // Cryptocurrency market
-import Profile from "./pages/Profile"
-import LoginPage from "./pages/LoginPage" // Adjusted component names
-import RegisterPage from "./pages/RegisterPage"
-import StockDetail from "./pages/StockDetail"
-import CryptoDetail from "./pages/CryptoDetail" // Cryptocurrency detail
-import AboutUsPage from "./pages/AboutUsPage"
-import HomePage from "./pages/HomePage"
-import ContactPage from "./pages/ContactPage"
-import PrivacyPolicyPage from "./pages/PrivacyPolicyPage"
-import i18n from "./i18n"
-import axios from "axios"
-import "./App.css"
-import CurrencyConverterPage from "./pages/CurrencyConverterPage"
-import { useTranslation } from "react-i18next" // Import useTranslation hook
+import React, { useState, useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Nav from "./components/Navbar";
+import Dashboard from "./pages/Dashboard";
+import Market from "./pages/Market";
+import CryptoMarket from "./pages/CryptoMarket";
+import Profile from "./pages/Profile";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import StockDetail from "./pages/StockDetail";
+import CryptoDetail from "./pages/CryptoDetail";
+import AboutUsPage from "./pages/AboutUsPage";
+import HomePage from "./pages/HomePage";
+import ContactPage from "./pages/ContactPage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import i18n from "./i18n";
+import axios from "axios";
+import "./App.css";
+import CurrencyConverterPage from "./pages/CurrencyConverterPage";
+import { useTranslation } from "react-i18next";
 
 const App = () => {
-  const { t } = useTranslation() // Initialize i18n for translations
-  const [user, setUser] = useState(null)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const { t } = useTranslation();
+  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    console.log("called")
-    fetchUserSession()
-  }, [])
+    fetchUserSession();
+  }, []);
 
-  // Function to fetch user session
+  // Updated fetchUserSession function
   const fetchUserSession = () => {
-    console.log("fetchUserSession called")
-    const token = localStorage.getItem("token")
-    console.log("token is", token)
+    const token = localStorage.getItem("token");
+    console.log("Fetching user session, token:", token);
 
     if (token) {
       axios
-        .get("/api/auth/me", {
+        .get("http://localhost:4000/api/profile/details", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         .then((response) => {
-          console.log("response", response)
-          setUser(response.data)
-          setIsAuthenticated(true)
+          console.log("User session response:", response.data);
+          setUser(response.data);
+          setIsAuthenticated(true);
         })
-        .catch(() => {
-          setIsAuthenticated(false)
-        })
+        .catch((error) => {
+          if (error.response && error.response.status === 404) {
+            console.error("Profile route not found:", error.response.data);
+            alert("Profile route not found. Please check your backend route.");
+          } else {
+            console.error("Error fetching user session:", error);
+          }
+          setIsAuthenticated(false);
+          setUser(null);
+        });
     } else {
-      setIsAuthenticated(false)
+      console.log("No token found, setting user as logged out.");
+      setIsAuthenticated(false);
+      setUser(null);
     }
-  }
+  };
 
-  const handleLogout = () => {
-    localStorage.removeItem("authToken")
-    setUser(null)
-    setIsAuthenticated(false)
-  }
+  // Updated handleLogout function
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem("token");
 
-  // Stock handling
-  const handleBuyStock = (stock) => {
-    if (!isAuthenticated) return alert(t("pleaseLoginToBuyStocks"))
-    axios
-      .post("/api/user/buy", { stockSymbol: stock.symbol })
-      .then(() => {
-        alert(t("stockBoughtSuccessfully"))
-      })
-      .catch((error) => {
-        console.error("Error buying stock:", error)
-      })
-  }
+      if (!token) {
+        alert("You are already logged out.");
+        return;
+      }
 
-  const handleSellStock = (stock) => {
-    if (!isAuthenticated) return alert(t("pleaseLoginToSellStocks"))
-    axios
-      .post("/api/user/sell", { stockSymbol: stock.symbol })
-      .then(() => {
-        alert(t("stockSoldSuccessfully"))
-      })
-      .catch((error) => {
-        console.error("Error selling stock:", error)
-      })
-  }
+      console.log("Logout button clicked, token:", token);
 
-  const handleAddToFavorites = (stock) => {
-    if (!isAuthenticated) return alert(t("pleaseLoginToAddToFavorites"))
-    axios
-      .post("/api/user/favorites", { stockSymbol: stock.symbol })
-      .then(() => {
-        alert(t("stockAddedToFavorites"))
-      })
-      .catch((error) => {
-        console.error("Error adding to favorites:", error)
-      })
-  }
+      // Call the backend logout endpoint
+      const response = await axios.post(
+        "http://localhost:4000/api/auth/logout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-  // Cryptocurrency handling
-  const handleBuyCrypto = (crypto) => {
-    if (!isAuthenticated) return alert(t("pleaseLoginToBuyCrypto"))
-    axios
-      .post("/api/user/buy-crypto", { cryptoSymbol: crypto.symbol })
-      .then(() => {
-        alert(t("cryptoBoughtSuccessfully"))
-      })
-      .catch((error) => {
-        console.error("Error buying cryptocurrency:", error)
-      })
-  }
+      if (response.status === 200) {
+        console.log("Logout successful");
 
-  const handleSellCrypto = (crypto) => {
-    if (!isAuthenticated) return alert(t("pleaseLoginToSellCrypto"))
-    axios
-      .post("/api/user/sell-crypto", { cryptoSymbol: crypto.symbol })
-      .then(() => {
-        alert(t("cryptoSoldSuccessfully"))
-      })
-      .catch((error) => {
-        console.error("Error selling cryptocurrency:", error)
-      })
-  }
+        // Clear local storage explicitly
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
 
-  const handleAddToFavoritesCrypto = (crypto) => {
-    if (!isAuthenticated) return alert(t("pleaseLoginToAddToFavoritesCrypto"))
-    axios
-      .post("/api/user/favorites-crypto", { cryptoSymbol: crypto.symbol })
-      .then(() => {
-        alert(t("cryptoAddedToFavorites"))
-      })
-      .catch((error) => {
-        console.error("Error adding to favorites cryptocurrency:", error)
-      })
-  }
-  console.log("user", user)
+        // Reset state
+        setUser(null);
+        setIsAuthenticated(false);
+
+        // Ensure the user session is reset
+        fetchUserSession();
+
+        // Redirect to the login page
+        window.location.href = "/login";
+      } else {
+        console.error("Logout failed:", response.data.message);
+        alert("Logout failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
+      alert("An error occurred during logout. Please try again.");
+    }
+  };
+
   return (
     <div className="App">
       <div className="container">
-        <Nav user={user} handleLogout={handleLogout} />
+        <Nav
+          user={user}
+          isAuthenticated={isAuthenticated}
+          onLogout={handleLogout}
+        />
         <main>
           <Routes>
-            {/* User routes */}
             <Route path="/" element={<HomePage />} />
             <Route
               path="/login"
@@ -154,34 +133,16 @@ const App = () => {
               }
             />
             <Route path="/register" element={<RegisterPage />} />
-
-            {/* Protected routes */}
             <Route
               path="/market"
               element={
-                isAuthenticated ? (
-                  <Market
-                    onBuy={handleBuyStock}
-                    onSell={handleSellStock}
-                    onFavorite={handleAddToFavorites}
-                  />
-                ) : (
-                  <Navigate to="/login" />
-                )
+                isAuthenticated ? <Market /> : <Navigate to="/login" />
               }
             />
             <Route
               path="/cryptomarket"
               element={
-                isAuthenticated ? (
-                  <CryptoMarket
-                    onBuy={handleBuyCrypto}
-                    onSell={handleSellCrypto}
-                    onFavorite={handleAddToFavoritesCrypto}
-                  />
-                ) : (
-                  <Navigate to="/login" />
-                )
+                isAuthenticated ? <CryptoMarket /> : <Navigate to="/login" />
               }
             />
             <Route
@@ -204,10 +165,6 @@ const App = () => {
                 )
               }
             />
-
-            {/* Public routes */}
-            <Route path="/stockdetail" element={<StockDetail />} />
-            <Route path="/cryptodetail" element={<CryptoDetail />} />
             <Route path="/aboutus" element={<AboutUsPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/privacy" element={<PrivacyPolicyPage />} />
@@ -215,14 +172,12 @@ const App = () => {
               path="/currency-converter"
               element={<CurrencyConverterPage />}
             />
-
-            {/* Catch-all route */}
             <Route path="*" element={<h1>404 - Page Not Found</h1>} />
           </Routes>
         </main>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
