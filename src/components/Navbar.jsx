@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
 import {
   FaSignOutAlt,
   FaUser,
@@ -9,26 +9,33 @@ import {
   FaMoon,
   FaInfoCircle,
   FaBitcoin,
-} from "react-icons/fa";
-import { useTranslation } from "react-i18next";
-import LanguageSelector from "./languageSelector";
+} from "react-icons/fa"
+import { useTranslation } from "react-i18next"
+import LanguageSelector from "./languageSelector"
 
-const Navbar = ({ isAuthenticated, onLogout }) => {
-  const { t } = useTranslation();
-  const [darkMode, setDarkMode] = useState(localStorage.getItem("darkMode") === "true" || false);
+const Navbar = ({ isAuthenticated, onLogout, user }) => {
+  console.log("user", user)
+  const { t } = useTranslation()
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("darkMode") === "true" || false
+  )
 
   const toggleDarkMode = () => {
-    const newDarkMode = !darkMode;
-    setDarkMode(newDarkMode);
-    document.body.classList.toggle("light-mode", !newDarkMode);
-    localStorage.setItem("darkMode", newDarkMode);
-  };
+    const newDarkMode = !darkMode
+    setDarkMode(newDarkMode)
+    document.body.classList.toggle("light-mode", !newDarkMode)
+    localStorage.setItem("darkMode", newDarkMode)
+  }
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          <img src="/images/logo.png" alt="TradeX Logo" className="navbar-logo-img" />
+          <img
+            src="/images/logo.png"
+            alt="TradeX Logo"
+            className="navbar-logo-img"
+          />
         </Link>
 
         <ul className="navbar-links">
@@ -78,10 +85,14 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
           ) : (
             <>
               <li>
-                <Link to="/login" className="navbar-link">{t("login")}</Link>
+                <Link to="/login" className="navbar-link">
+                  {t("login")}
+                </Link>
               </li>
               <li>
-                <Link to="/register" className="navbar-link">{t("register")}</Link>
+                <Link to="/register" className="navbar-link">
+                  {t("register")}
+                </Link>
               </li>
             </>
           )}
@@ -94,14 +105,7 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
         </button>
       </div>
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
-
-
-
-
-
-
-
+export default Navbar
