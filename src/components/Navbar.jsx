@@ -1,20 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaSignOutAlt, FaUser, FaChartLine, FaStore, FaSun, FaMoon, FaInfoCircle, FaBitcoin, FaLanguage, FaWallet, FaStar, FaHistory } from "react-icons/fa";
-import { useTranslation } from 'react-i18next';
+
+import {
+  FaSignOutAlt,
+  FaUser,
+  FaChartLine,
+  FaStore,
+  FaSun,
+  FaMoon,
+  FaInfoCircle,
+  FaBitcoin,
+} from "react-icons/fa";
+import { useTranslation } from "react-i18next";
+import LanguageSelector from "./languageSelector";
+
 
 const Navbar = ({ isAuthenticated, onLogout }) => {
-  const { t, i18n } = useTranslation();
-  const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true' || false); 
-  const [language, setLanguage] = useState(localStorage.getItem("language") || "en"); 
+  const { t } = useTranslation();
+  const [darkMode, setDarkMode] = useState(localStorage.getItem("darkMode") === "true" || false);
 
   // Toggle Dark Mode
   const toggleDarkMode = () => {
     const newDarkMode = !darkMode;
     setDarkMode(newDarkMode);
     document.body.classList.toggle("light-mode", !newDarkMode);
-    localStorage.setItem("darkMode", newDarkMode); 
+    localStorage.setItem("darkMode", newDarkMode);
   };
+
 
   // Handle language change
   const handleLanguageChange = (e) => {
@@ -28,6 +40,7 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
   useEffect(() => {
     i18n.changeLanguage(language); 
   }, [language, i18n]);
+
 
   return (
     <nav className="navbar">
@@ -74,30 +87,38 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
           )}
 
           {/* Common links for both authenticated and non-authenticated users */}
+
           <li>
             <Link to="/currency-converter" className="navbar-link">
-              <FaBitcoin /> {t('currencyConverter')}
+              <FaBitcoin /> {t("currencyConverter")}
             </Link>
           </li>
           <li>
             <Link to="/aboutus" className="navbar-link">
-              <FaInfoCircle /> {t('aboutUs')}
+
+              <FaInfoCircle /> {t("aboutUs")}
+
             </Link>
           </li>
           <li>
             <Link to="/contact" className="navbar-link">
-              {t('contact')}
+
+              {t("contact")}
+
             </Link>
           </li>
           <li>
             <Link to="/privacy" className="navbar-link">
-              {t('privacyPolicy')}
+
+              {t("privacyPolicy")}
+
             </Link>
           </li>
 
           {isAuthenticated ? (
             <>
               <li>
+
                 <Link to="/dashboard" className="navbar-link">
                   <FaChartLine /> {t('dashboard')}
                 </Link>
@@ -105,42 +126,37 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
               <li>
                 <Link to="/profile" className="navbar-link">
                   <FaUser /> {t('profile')}
+
                 </Link>
               </li>
               <li>
                 <button onClick={onLogout} className="logout-button">
+
                   <FaSignOutAlt /> {t('logout')}
+
                 </button>
               </li>
             </>
           ) : (
             <>
               <li>
-                <Link to="/login" className="navbar-link">{t('login')}</Link>
+                <Link to="/login" className="navbar-link">{t("login")}</Link>
               </li>
               <li>
-                <Link to="/register" className="navbar-link">{t('register')}</Link>
+                <Link to="/register" className="navbar-link">{t("register")}</Link>
               </li>
             </>
           )}
         </ul>
+
+
+        <LanguageSelector />
+
+        <button onClick={toggleDarkMode} className="toggle-button">
+          {darkMode ? <FaSun /> : <FaMoon />}
+        </button>
       </div>
 
-      {/* Language Selector */}
-      <div className="language-selector">
-        <FaLanguage />
-        <select value={language} onChange={handleLanguageChange} className="language-dropdown">
-          <option value="en">{t('english')}</option>
-          <option value="es">{t('spanish')}</option>
-          <option value="fr">{t('french')}</option>
-          <option value="ar">{t('arabic')}</option>
-        </select>
-      </div>
-
-      {/* Dark Mode Toggle */}
-      <button onClick={toggleDarkMode} className="toggle-button">
-        {darkMode ? <FaSun /> : <FaMoon />}
-      </button>
     </nav>
   );
 };
