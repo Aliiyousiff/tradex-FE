@@ -1,47 +1,53 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaChartLine, FaMoneyBillWave, FaLock } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const HomePage = () => {
+  const { t } = useTranslation();  // Hook for translations
+
   return (
     <div className="home-container">
+      {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-content">
-          <h1>Welcome to TradeX</h1>
-          <p>Your trusted platform for intelligent trading and smart investments.</p>
-          <Link to="/register" className="cta-button">Get Started</Link>
+          <h1>{t('welcomeMessage')}</h1>  {/* Translated welcome message */}
+          <p>{t('heroDescription')}</p>  {/* Translated description */}
+          <Link to="/register" className="cta-button">{t('getStarted')}</Link> {/* Translated button */}
         </div>
       </section>
 
+      {/* Features Section */}
       <section className="features-section">
         <div className="feature">
           <FaChartLine size={50} color="#34c759" />
-          <h3>Real-Time Market Insights</h3>
-          <p>Stay ahead of the market with real-time stock prices, trends, and advanced analytics to make informed decisions.</p>
+          <h3>{t('realTimeMarketInsights')}</h3>  {/* Translated feature title */}
+          <p>{t('realTimeMarketDescription')}</p> {/* Translated feature description */}
         </div>
         <div className="feature">
           <FaMoneyBillWave size={50} color="#ff3b30" />
-          <h3>Powerful Trading Tools</h3>
-          <p>Leverage advanced trading features, including real-time price tracking and intuitive order execution tools.</p>
+          <h3>{t('powerfulTradingTools')}</h3>  {/* Translated feature title */}
+          <p>{t('powerfulTradingToolsDescription')}</p> {/* Translated feature description */}
         </div>
         <div className="feature">
           <FaLock size={50} color="#4a90e2" />
-          <h3>Top-Tier Security</h3>
-          <p>Your privacy is our priority. Enjoy peace of mind with robust encryption and industry-leading security protocols.</p>
+          <h3>{t('topTierSecurity')}</h3>  {/* Translated feature title */}
+          <p>{t('topTierSecurityDescription')}</p> {/* Translated feature description */}
         </div>
       </section>
 
+      {/* CTA Section */}
       <section className="cta-section">
-        <h2>Start Your Trading Journey Today</h2>
-        <p>Join thousands of traders who trust TradeX for seamless, secure, and efficient trading.</p>
-        <Link to="/register" className="cta-button">Join Now</Link>
+        <h2>{t('startYourTradingJourney')}</h2>  {/* Translated CTA header */}
+        <p>{t('joinThousandsOfTraders')}</p>  {/* Translated CTA subheader */}
+        <Link to="/register" className="cta-button">{t('getStarted')}</Link> {/* Translated button */}
       </section>
 
       <footer className="footer">
         <div className="footer-links">
-          <Link to="/aboutus">About Us</Link>
-          <Link to="/contact">Contact</Link>
-          <Link to="/privacy">Privacy Policy</Link>
+          <Link to="/aboutus">{t('aboutUs')}</Link>
+          <Link to="/contact">{t('contact')}</Link>
+          <Link to="/privacy">{t('privacyPolicy')}</Link>
         </div>
       </footer>
     </div>
