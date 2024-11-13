@@ -26,6 +26,7 @@ const App = () => {
 
   // Function to fetch user session
   const fetchUserSession = () => {
+
     const token = localStorage.getItem('authToken');
     if (token) {
       axios
@@ -33,6 +34,7 @@ const App = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+
         })
         .then((response) => {
           setUser(response.data);
@@ -43,6 +45,7 @@ const App = () => {
         });
     } else {
       setIsAuthenticated(false);
+
     }
   };
 
@@ -50,84 +53,61 @@ const App = () => {
     fetchUserSession();
   }, []);
 
+  // Logout handler
   const handleLogout = () => {
     localStorage.removeItem('authToken');
     setUser(null);
     setIsAuthenticated(false);
   };
 
-  // Stock handling
+  // Stock actions
   const handleBuyStock = (stock) => {
     if (!isAuthenticated) return alert(t('pleaseLoginToBuyStocks'));
     axios
       .post('/api/user/buy', { stockSymbol: stock.symbol })
-      .then(() => {
-        alert(t('stockBoughtSuccessfully'));
-      })
-      .catch((error) => {
-        console.error('Error buying stock:', error);
-      });
+      .then(() => alert(t('stockBoughtSuccessfully')))
+      .catch((error) => console.error('Error buying stock:', error));
   };
 
   const handleSellStock = (stock) => {
     if (!isAuthenticated) return alert(t('pleaseLoginToSellStocks'));
     axios
       .post('/api/user/sell', { stockSymbol: stock.symbol })
-      .then(() => {
-        alert(t('stockSoldSuccessfully'));
-      })
-      .catch((error) => {
-        console.error('Error selling stock:', error);
-      });
+      .then(() => alert(t('stockSoldSuccessfully')))
+      .catch((error) => console.error('Error selling stock:', error));
   };
 
   const handleAddToFavorites = (stock) => {
     if (!isAuthenticated) return alert(t('pleaseLoginToAddToFavorites'));
     axios
       .post('/api/user/favorites', { stockSymbol: stock.symbol })
-      .then(() => {
-        alert(t('stockAddedToFavorites'));
-      })
-      .catch((error) => {
-        console.error('Error adding to favorites:', error);
-      });
+      .then(() => alert(t('stockAddedToFavorites')))
+      .catch((error) => console.error('Error adding to favorites:', error));
   };
 
-  // Cryptocurrency handling
+  // Cryptocurrency actions
   const handleBuyCrypto = (crypto) => {
     if (!isAuthenticated) return alert(t('pleaseLoginToBuyCrypto'));
     axios
       .post('/api/user/buy-crypto', { cryptoSymbol: crypto.symbol })
-      .then(() => {
-        alert(t('cryptoBoughtSuccessfully'));
-      })
-      .catch((error) => {
-        console.error('Error buying cryptocurrency:', error);
-      });
+      .then(() => alert(t('cryptoBoughtSuccessfully')))
+      .catch((error) => console.error('Error buying cryptocurrency:', error));
   };
 
   const handleSellCrypto = (crypto) => {
     if (!isAuthenticated) return alert(t('pleaseLoginToSellCrypto'));
     axios
       .post('/api/user/sell-crypto', { cryptoSymbol: crypto.symbol })
-      .then(() => {
-        alert(t('cryptoSoldSuccessfully'));
-      })
-      .catch((error) => {
-        console.error('Error selling cryptocurrency:', error);
-      });
+      .then(() => alert(t('cryptoSoldSuccessfully')))
+      .catch((error) => console.error('Error selling cryptocurrency:', error));
   };
 
   const handleAddToFavoritesCrypto = (crypto) => {
     if (!isAuthenticated) return alert(t('pleaseLoginToAddToFavoritesCrypto'));
     axios
       .post('/api/user/favorites-crypto', { cryptoSymbol: crypto.symbol })
-      .then(() => {
-        alert(t('cryptoAddedToFavorites'));
-      })
-      .catch((error) => {
-        console.error('Error adding to favorites cryptocurrency:', error);
-      });
+      .then(() => alert(t('cryptoAddedToFavorites')))
+      .catch((error) => console.error('Error adding to favorites:', error));
   };
 
   return (
@@ -213,6 +193,7 @@ const App = () => {
           </Routes>
         </main>
       </div>
+
     </div>
   );
 };
