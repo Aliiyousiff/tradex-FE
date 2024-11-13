@@ -22,5 +22,6 @@
   "address": "Edificio 1306, Calle 4625, Frente al Mar de Manama, 346 Reino de Baréin, Apartado de correos 20525",
   "call": "Llamar",
   "email": "Correo Electrónico",
-  "fax": "Fax"
+  "fax": "Fax",
+    "currencyConverter": "Convertidor de Monedas"
 }
